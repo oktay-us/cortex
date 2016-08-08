@@ -36,7 +36,7 @@ class SNP(BasicDataset):
         # balance data for traning, valid, and test parts
         balance = False
         if idx is not None:
-            balance=True
+            #balance=True
             data[name] = data[name][idx]
             data['label'] = data['label'][idx]
 
@@ -61,17 +61,21 @@ class SNP(BasicDataset):
         '''
         data_path = get_paths()['$data']
         print('Loading genetic data from %s' % data_path)
-        X = loadmat(data_path + '/' + source['snp'])
-        Y = loadmat(data_path + '/' + source['label'])
-        X_key = list(set(X.keys()) - set(['__header__', '__globals__', '__version__']))
-        Y_key = list(set(Y.keys()) - set(['__header__', '__globals__', '__version__']))
-        if len(X_key)!=1:
-            raise ValueError('Found unsufficient number of  header for SNP data')
-        if len(Y_key)!=1:
-            raise ValueError('Found unsufficient number of header for SNP data labels')
+        if source['snp'].endswith('.mat'):
+            X = loadmat(data_path + '/' + source['snp'])
+            Y = loadmat(data_path + '/' + source['label'])
+            X_key = list(set(X.keys()) - set(['__header__', '__globals__', '__version__']))
+            Y_key = list(set(Y.keys()) - set(['__header__', '__globals__', '__version__']))
+            if len(X_key)!=1:
+                raise ValueError('Found unsufficient number of  header for SNP data')
+            if len(Y_key)!=1:
+                raise ValueError('Found unsufficient number of header for SNP data labels')
+            X = np.float32(X[X_key[0]])
+            Y = np.float32(Y[Y_key[0]])
+        elif source['snp'].endswith('.txt'):
+            X = np.loadtxt(data_path + '/' + source['snp'])
+            Y = np.loadtxt(data_path + '/' + source['label'])
 
-        X = np.float32(X[X_key[0]])
-        Y = np.float32(Y[Y_key[0]])
         try :
             Chr = loadmat(data_path + '/' + source['chrom_index'])
             Chr_key = list(set(Chr.keys()) - set(['__header__', '__globals__', '__version__']))
