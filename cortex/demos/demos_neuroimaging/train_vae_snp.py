@@ -3,12 +3,14 @@ Vae training for SNP data
 '''
 
 import cortex
+from cortex.utils import logger as cortex_logger
 
+cortex_logger.set_stream_logger(2)
 n_posterior_samples = 10
 n_posterior_samples_test = 1000
 dim_h = 200
 
-cortex.prepare_data('SNP', mode='train', source='/Users/oagcaoglu/Desktop/cortex/cortex/Snps/vae_snp.yaml')
+cortex.prepare_data_split('SNP', name='snp', split=[.8, .1, .1], source='/na/homes/oagcaoglu/Desktop/cortex/cortex/demos/demos_neuroimaging/vae_snp.yaml')
 
 cortex.prepare_cell('DistributionMLP', name='approx_posterior', dim_hs=[500],
                     h_act='softplus')

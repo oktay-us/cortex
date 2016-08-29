@@ -25,7 +25,7 @@ class SNP(NeuroimagingDataset):
     Discrete data TODO
 
     '''
-    def __init__(self, source=None, name='snp', mode='train', distribution='gaussian', convert_one_hot=True, idx=None, **kwargs):
+    def __init__(self, source=None, name='snp', mode='train', balance=False, distribution='gaussian', one_hot=True, idx=None, **kwargs):
 
         '''Initialize the SNP dataset.
 
@@ -53,17 +53,18 @@ class SNP(NeuroimagingDataset):
         # Fetch SNP data from "source"
         X, Y = self.get_data(source)
 
-        data = {'input': X, 'label': Y}
+        data = {'input': X, 'labels': Y}
 
         # balance data for traning, valid, and test parts
-        balance = False
-        if idx is not None:
-            balance=True
-            data[name] = data[name][idx]
-            data['label'] = data['label'][idx]
-
+        #balance = False
+        #if idx is not None:
+        #    balance=True
+        #    data[name] = data[name][idx]
+        #    data['label'] = data['label'][idx]
+        import ipdb
+        ipdb.set_trace()
         distributions = {'input': distribution, 'label': 'multinomial'}
-        super(SNP, self).__init__(data, name=name, balance=balance, distributions=distributions,  mode=mode, **kwargs)
+        super(SNP, self).__init__(data, name=name, balance=balance, distributions=distributions,  mode=mode, one_hot=one_hot, **kwargs)
 
         #self.mean_image = self.data['input'].mean(axis=0)
 
@@ -87,7 +88,7 @@ class SNP(NeuroimagingDataset):
         self.logger.debug('Source locations: \n%s' % pprint.pformat(source_dict))
         data_path = resolve_path(source_dict['snp'])
 
-        label_path = resolve_path(source_dict['label'])
+        label_path = resolve_path(source_dict['labels'])
 
         print('Loading genetic data from %s' % data_path)
         if data_path.endswith('.mat'):

@@ -8,5 +8,5 @@ input_layer: 'snp'
 dim_hs: [800, 600]
 h_act: 'T.tanh'
 h_act: 'T.nnet.softplus'
-snp: '$data/snp_mcic_3way_bykegg/snpdata_mcic_3way_bykegg.mat'
-label: '$data/snp_mcic_3way_bykegg/pheno_mcic_3way_bykegg.mat'
+snp: '$data/snp_mcic_3way_bykegg/snpdata_mcic_3way_bykegg_one_hot.mat'
+labels: '$data/snp_mcic_3way_bykegg/pheno_mcic_3way_bykegg.mat'
