@@ -1,0 +1,12 @@
+name: 'snp'
+prior: 'logistic'
+dim_h: 100
+epochs: 300
+optimizer: 'rmsprop'
+learning_rate: 0.001
+input_layer: 'snp'
+dim_hs: [800, 600]
+h_act: 'T.tanh'
+h_act: 'T.nnet.softplus'
+snp: '$data/snp_mcic_3way_bykegg/snpdata_mcic_3way_bykegg.mat'
+label: '$data/snp_mcic_3way_bykegg/pheno_mcic_3way_bykegg.mat'
