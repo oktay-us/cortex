@@ -18,7 +18,7 @@ batch_size = 10
 distribution = 'gaussian'
 
 cortex.prepare_data_split('MRI', name='data', split=[.8, .1, .1],
-                          source='$data/VBM/VBM.yaml')
+                          source='$data/neuroimaging/VBM_test/VBM.yaml')
 
 cortex.prepare_cell('DistributionMLP', name='approx_posterior', dim_hs=[500],
                     h_act='tanh')
